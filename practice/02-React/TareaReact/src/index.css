@@ -1,0 +1,41 @@
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #fff5f7;
+  padding: 20px;
+}
+
+.app {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+h1 {
+  color: #d63384;
+  margin-bottom: 20px;
+}
+
+.event-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.event-card {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.event-card h3 {
+  color: #d63384;
+  margin-bottom: 8px;
+}
+
+.event-location {
+  color: #888;
+  font-size: 14px;
+  font-style: italic;
+}
