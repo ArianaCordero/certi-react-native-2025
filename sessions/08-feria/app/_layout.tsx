@@ -12,6 +12,7 @@ const RootLayout = () => {
     return (
         <AuthProvider>
             <Stack screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="onBoarding" />
                 <Stack.Screen name="login" />
                 <Stack.Screen name="signup" />
                 <Stack.Screen name="(tabs)" />
