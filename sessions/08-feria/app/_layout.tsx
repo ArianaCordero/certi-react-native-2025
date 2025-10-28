@@ -1,20 +1,29 @@
 import React from 'react';
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import { AuthProvider } from '../src/auth/authProvider';
-// import * as WebBrowser from "expo-web-browser";
-// import { AuthProvider } from '../src/auth/authProvider';
 
+import { useEffect, useRef, useState } from 'react';
+import * as Notifications from 'expo-notifications';
+import { usePushNotifications } from '../src/lib/usePushNotifications';
 
-// WebBrowser.maybeCompleteAuthSession();
-
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+    shouldShowAlert: true,     // iOS
+    shouldShowBanner: true,    // iOS 16+
+    shouldShowList: true       // iOS summary
+  }),
+});
 
 const RootLayout = () => {
+
+    usePushNotifications();
     return (
         <AuthProvider>
             <Stack screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="onBoarding" />
-                <Stack.Screen name="login" />
-                <Stack.Screen name="signup" />
+                <Stack.Screen name="onboarding" />
+                <Stack.Screen name="(auth)" />
                 <Stack.Screen name="(tabs)" />
             </Stack>
         </AuthProvider>

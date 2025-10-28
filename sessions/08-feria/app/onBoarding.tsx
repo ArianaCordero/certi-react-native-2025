@@ -1,20 +1,60 @@
-import { View, Text } from 'react-native';
+import React, { useCallback } from 'react';
+import { Image, Text } from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 import { STEPS } from '../src/data/steps';
-import { router } from 'expo-router';
+import { usePushNotifications } from '../src/lib/usePushNotifications';
 
-const OnBoardingScreen = () => {
-    const finish = () => {
-        router.replace('/login');
-        
-    }
+export default function OnboardingScreen() {
+    const router = useRouter();
+    const { expoPushToken, notification, sendPushNotification, scheduleLocalNotification } = usePushNotifications();
+    const finish = useCallback(async () => {
+        await AsyncStorage.setItem('hasSeenOnboarding', 'false');
+        sendPushNotification("ExponentPushToken[DionA6OB7wDUyfGzT4QgL5]");
+        console.log('Onboarding finished, navigating to login...');
+
+        //router.replace('/login');
+    }, [router]);
+
     return (
         <Onboarding
-            pages={STEPS}
-            onDone={finish}
-            onSkip={finish}
-        />
-    )
-}
+            // Pantallas
+            pages={STEPS.map(s => ({
+                backgroundColor: s.backgroundColor,
+                image: s.image,
+                title: s.title,
+                subtitle: s.subtitle,
+                titleStyles: { fontSize: 24, fontWeight: '700', color: '#111827', textAlign: 'center' },
+                subTitleStyles: { fontSize: 16, color: '#4b5563', textAlign: 'center', lineHeight: 22 },
+                imageContainerStyles: { paddingBottom: 24 },
+            }))}
 
-export default OnBoardingScreen;
+            // Textos
+            skipLabel="Omitir"
+            nextLabel="Siguiente"
+            doneLabel="Empezar"
+
+            // Estilos de los dots
+            bottomBarHighlight={false}
+            containerStyles={{ flex: 1 }}
+            controlStatusBar={false}
+            DotComponent={({ selected }) => (
+                <Text
+                    style={{
+                        width: selected ? 20 : 10,
+                        height: 10,
+                        borderRadius: 5,
+                        backgroundColor: selected ? '#f9738f' : '#e5e7eb',
+                        marginHorizontal: 4,
+                    }}
+                />
+            )}
+
+            // Acciones
+            onSkip={finish}
+            onDone={finish}
+        />
+    );
+}
