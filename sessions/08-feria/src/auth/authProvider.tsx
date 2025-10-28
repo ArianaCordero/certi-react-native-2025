@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../data/firebase";
 import { getUserByUid } from "../services/userService";
+import { Redirect } from "expo-router";
 
 type AppUser = {
   uid: string;
@@ -32,6 +33,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     const unsub = onAuthStateChanged(auth, async (firebaseUser) => {
       if (!isMounted) return;
       setLoading(true);
+      
 
       if (!firebaseUser) {
         console.info("[Auth] Sesión cerrada.");

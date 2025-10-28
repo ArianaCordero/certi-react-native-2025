@@ -17,11 +17,14 @@ const AuthLayout = () => {
         return <Redirect href="map"/>
     }
 
+
     return (
         <Stack screenOptions={{headerShown: false}}> 
+        <Stack.Screen name="onBoarding"/>
             <Stack.Screen name="login"/>
             <Stack.Screen name="signup"/>
         </Stack>
     );
 }
 export default AuthLayout;
+
